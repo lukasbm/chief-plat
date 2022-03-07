@@ -1,7 +1,9 @@
 import os
 
-from flask import Flask
+from flask import Flask, abort
 from flask_httpauth import HTTPTokenAuth
+
+from projects import find_project
 
 app = Flask(__name__)
 auth = HTTPTokenAuth(scheme='Bearer')
@@ -21,23 +23,29 @@ def projects():
 
 @app.route("/project/<string:project>/start")
 @auth.login_required
-def project_start(project):
-    return f"<p>Hello, {project}!</p>"
+def project_start(project: str):
+    p = find_project(project)
+    if not p:
+        return abort(404)
 
-
-@app.route("/project/<string:project>/start")
-@auth.login_required
-def project_start(project):
     return f"<p>Hello, {project}!</p>"
 
 
 @app.route("/project/<string:project>/stop")
 @auth.login_required
-def project_stop(project):
+def project_stop(project: str):
+    p = find_project(project)
+    if not p:
+        return abort(404)
+
     return f"<p>Hello, {project}!</p>"
 
 
 @app.route("/project/<string:project>/logs")
 @auth.login_required
-def project_logs(project):
+def project_logs(project: str):
+    p = find_project(project)
+    if not p:
+        return abort(404)
+
     return f"<p>Hello, {project}!</p>"
