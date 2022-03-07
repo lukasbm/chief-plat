@@ -1,6 +1,7 @@
 import os.path
 from dataclasses import dataclass
 
+import yaml
 from typing import List, Optional
 
 
@@ -8,18 +9,17 @@ from typing import List, Optional
 class Project:
     name: str
     containers: List[str]
-
-    def get_path(self) -> str:
-        return os.path.abspath(os.path.join(os.getcwd(), "examples", self.name))
-
+    start: str
+    install: str
+    stop: str
 
 def find_project(name: str) -> Optional[Project]:
-    p = Project(name=name, containers=[])
-    if not os.path.exists(p.get_path()):
+    p = os.path.abspath(os.path.join(os.getcwd(), "examples", f"{name}.yml"))
+    if not os.path.exists(p):
         return None
 
-    # TODO make error tolerant
-    with open(os.path.join(p.get_path(), "containers.txt")) as f:
-        p.containers = f.readlines()
-
-    return p
+    with open(p, "r") as file:
+        try:
+            print(yaml.safe_load(file))
+        except yaml.YAMLError as exc:
+            print(exc)

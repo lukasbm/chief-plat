@@ -1,0 +1,4 @@
+---
+type: docker # available: docker, docker-compose, native
+containers:
+  - test-app-redis
