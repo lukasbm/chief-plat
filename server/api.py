@@ -1,9 +1,8 @@
 import json
 import os
-
+from werkzeug.exceptions import HTTPException
 from flask import Flask, abort, jsonify
 from flask_httpauth import HTTPTokenAuth
-
 from projects import all_projects, find_project, get_logs
 
 app = Flask(__name__)
@@ -14,6 +13,22 @@ auth = HTTPTokenAuth(scheme='Bearer')
 def verify_token(token):
     if token == os.getenv("API_KEY"):
         return token
+
+
+@app.errorhandler(Exception)
+def handle_exception(e):
+    if isinstance(e, HTTPException):
+        return jsonify({
+            "code": e.code,
+            "name": e.name,
+            "description": e.description,
+        })
+    else:
+        return jsonify({
+            "code": 500,
+            "name": "Internal Server Error",
+            "description": str(e)
+        }), 500
 
 
 @app.route("/projects")
