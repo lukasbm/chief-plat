@@ -13,7 +13,6 @@ class InvalidProjectConfigError(Exception):
     pass
 
 
-@dataclass
 class Project:
     name: str
     containers: List[str]
@@ -60,4 +59,5 @@ def get_logs(p: Project):
     res = {}
     for c in p.containers:
         container = cli.containers.get(c)
-        res[c] = container.logs()
+        res[c] = str(container.logs())
+    return res

@@ -4,9 +4,9 @@ containers:
   - test-app-redis
 start: |-
   #!/bin/bash#!/bin/bash
-  docker stop redis
+  docker stop test-app-redis
   docker pull redis:latest
-  docker run -d --rm --name redis redis
+  docker run -d --rm --name test-app-redis redis
 stop: |-
   #!/bin/bash
-  docker stop redis
+  docker stop test-app-redis
