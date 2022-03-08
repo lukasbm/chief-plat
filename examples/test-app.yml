@@ -1,4 +1,12 @@
 ---
-type: docker # available: docker, docker-compose, native
+type: native # available: docker, docker-compose, native
 containers:
   - test-app-redis
+start: |-
+  #!/bin/bash#!/bin/bash
+  docker stop redis
+  docker pull redis:latest
+  docker run -d --rm --name redis redis
+stop: |-
+  #!/bin/bash
+  docker stop redis

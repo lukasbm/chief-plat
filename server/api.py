@@ -1,9 +1,10 @@
+import json
 import os
 
-from flask import Flask, abort
+from flask import Flask, abort, jsonify
 from flask_httpauth import HTTPTokenAuth
 
-from projects import find_project
+from projects import all_projects, find_project, get_logs
 
 app = Flask(__name__)
 auth = HTTPTokenAuth(scheme='Bearer')
@@ -18,27 +19,34 @@ def verify_token(token):
 @app.route("/projects")
 @auth.login_required
 def projects():
-    return "<p>Hello, World!</p>"
+    all_projects()
+    return "/projects"
 
 
 @app.route("/project/<string:project>/start")
 @auth.login_required
 def project_start(project: str):
     p = find_project(project)
-    if not p:
+    if p is None:
         return abort(404)
 
+    os.system(p.start)
+    
     return f"<p>Hello, {project}!</p>"
+
 
 
 @app.route("/project/<string:project>/stop")
 @auth.login_required
 def project_stop(project: str):
     p = find_project(project)
-    if not p:
+    if p is None:
         return abort(404)
 
+    os.system(p.stop)
+    
     return f"<p>Hello, {project}!</p>"
+
 
 
 @app.route("/project/<string:project>/logs")
@@ -48,4 +56,4 @@ def project_logs(project: str):
     if not p:
         return abort(404)
 
-    return f"<p>Hello, {project}!</p>"
+    return jsonify(get_logs(p))
