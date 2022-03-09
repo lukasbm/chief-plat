@@ -34,8 +34,7 @@ def handle_exception(e):
 @app.route("/projects")
 @auth.login_required
 def projects():
-    all_projects()
-    return "/projects"
+    return jsonify(all_projects())
 
 
 @app.route("/project/<string:project>/start")
@@ -47,7 +46,7 @@ def project_start(project: str):
 
     os.system(p.start)
     
-    return f"<p>Hello, {project}!</p>"
+    return jsonify("hi")
 
 
 
@@ -60,8 +59,7 @@ def project_stop(project: str):
 
     os.system(p.stop)
     
-    return f"<p>Hello, {project}!</p>"
-
+    return jsonify("hi")
 
 
 @app.route("/project/<string:project>/logs")

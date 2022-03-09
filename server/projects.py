@@ -13,6 +13,7 @@ class InvalidProjectConfigError(Exception):
     pass
 
 
+@dataclass
 class Project:
     name: str
     containers: List[str]
@@ -20,10 +21,15 @@ class Project:
     stop: str
 
 
-def all_projects():
+def all_projects() -> List[Project]:
     p = os.path.abspath(os.path.join(os.getcwd(), "examples"))
+    res = []
     for file in glob.glob(f"{p}/*.yml"):
-        print(file)
+        print(file.split("/")[-1][:-4])
+        p = find_project(file.split("/")[-1][:-4])
+        if p is not None:
+            res.append(p)
+    return res
 
 
 def find_project(name: str) -> Optional[Project]:
@@ -40,19 +46,17 @@ def find_project(name: str) -> Optional[Project]:
 
 
     # Parse config into project
-    p = Project()
-    p.name = name
-    p.containers = conf["containers"]
+    containers = conf["containers"]
+    start = ""
+    stop = ""
 
     if conf["type"] == "native":
-        p.start = conf["start"]
-        p.stop = conf["stop"]
-
+        start = conf["start"]
+        stop = conf["stop"]
     else:
         raise NotImplementedError
 
-    print(p)
-    return p
+    return Project(name=name, containers=containers, start=start, stop=stop)
 
 
 def get_logs(p: Project):
