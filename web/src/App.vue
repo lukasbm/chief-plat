@@ -60,10 +60,12 @@ projects.value = [
 </script>
 
 <template>
-  <HeaderVue></HeaderVue>
-  <main class="container flex flex-wrap justify-between items-center mx-auto">
-    <div class="grid gap-4 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
-      <ProjectVue v-for="proj in projects" :key="proj.name" :project="proj"></ProjectVue>
-    </div>
-  </main>
+  <div class="bg-gray-100 dark:bg-gray-600 min-h-screen">
+    <HeaderVue></HeaderVue>
+    <main class="container flex flex-wrap justify-between items-center mx-auto">
+      <div class="grid gap-4 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
+        <ProjectVue v-for="proj in projects" :key="proj.name" :project="proj"></ProjectVue>
+      </div>
+    </main>
+  </div>
 </template>

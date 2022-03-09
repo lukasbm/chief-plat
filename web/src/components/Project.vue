@@ -26,9 +26,8 @@ defineProps({
       <span class="material-icons w-full h-full">restart_alt</span>
     </button>
 
-    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+    <p class="mb-2 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
 
-    <h3>Containers:</h3>
     <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
       <li class="py-3 sm:py-4" v-for="container in project.containers" :key="container.name">
         <div class="flex items-center space-x-4">
