@@ -7,7 +7,8 @@ tasks:
       python3 -v venv venv
       source venv/bin/activate
       pip install -r requirements.txt
-      deactivate
+      source deactivate
+      cd ..
     command: sh run.sh
     openMode: split-right
   
@@ -15,7 +16,7 @@ tasks:
     init: |
       cd ./web
       npm install
-    command: cd web && npm run dev
+    command: npm run dev
     openMode: split-right
 
 
