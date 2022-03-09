@@ -8,7 +8,6 @@ import docker
 
 cli = docker.from_env()
 
-
 class InvalidProjectConfigError(Exception):
     pass
 
@@ -65,3 +64,6 @@ def get_logs(p: Project):
         container = cli.containers.get(c)
         res[c] = str(container.logs())
     return res
+
+def get_status(p: Project):
+    pass # TODO

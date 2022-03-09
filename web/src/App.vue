@@ -1,8 +1,6 @@
 <script setup>
 import ProjectVue from "./components/Project.vue";
-import RestartDialogVue from "./components/RestartDialog.vue";
-import LogsVue from "./components/Logs.vue";
-import AuthVue from "./components/Auth.vue";
+import HeaderVue from "./components/Header.vue";
 import { ref } from "vue";
 
 let projects = ref([]);
@@ -62,14 +60,10 @@ projects.value = [
 </script>
 
 <template>
-  <h1 class="text-3xl font-bold">Chief-Plat</h1>
-  <AuthVue></AuthVue>
-
-  <main class="container">
+  <HeaderVue></HeaderVue>
+  <main class="container flex flex-wrap justify-between items-center mx-auto">
     <div class="grid gap-4 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
       <ProjectVue v-for="proj in projects" :key="proj.name" :project="proj"></ProjectVue>
     </div>
-    <RestartDialogVue :open="false"></RestartDialogVue>
-    <LogsVue></LogsVue>
   </main>
 </template>

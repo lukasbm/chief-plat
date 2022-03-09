@@ -1,20 +1,19 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 
 let password = ref("");
 
-
 const setApiKey = (e) => {
-    e.preventDefault();
-    localStorage.setItem("apiKey", password.value);
-    return false;
+  e.preventDefault();
+  localStorage.setItem("apiKey", password.value);
+  return false;
 };
 </script>
 
 <template>
   <!-- Modal toggle -->
   <button
-    class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
     type="button"
     data-modal-toggle="authentication-modal"
   >
