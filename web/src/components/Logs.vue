@@ -1,4 +1,26 @@
 <script setup>
+const props = defineProps({
+  projectName: {
+    type: String,
+    required: true,
+  },
+});
+
+const apiKey = localStorage.getItem("apiKey");
+
+fetch(`${import.meta.env.BASE_URL}/project/${props.projectName}/logs`, {
+  method: "GET",
+  headers: {
+    Authorization: `Bearer ${apiKey}`,
+  },
+})
+  .then((resp) => {
+    console.log(resp);
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+
 const logs = [
   {
     container: "redis",
@@ -25,11 +47,12 @@ lol
 
 <template>
   <button
-    class="block w-full md:w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-    type="button"
+    class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
     data-modal-toggle="logs-modal"
+    type="button"
   >
-    Extra large modal
+    Logs
+    <span class="material-icons scale-75">content_paste_go</span>
   </button>
 
   <!-- Logs Modal -->
@@ -65,15 +88,7 @@ lol
         </div>
         <!-- Modal Content -->
         <div id="logs-content">
-          <div
-            class="p-4 bg-gray-50 rounded-lg dark:bg-gray-800"
-            :id="l.container"
-            role="tabpanel"
-            :class="{ hidden: i != 0 }"
-            :aria-labelledby="`${l.container}-tab`"
-            v-for="(l, i) in logs"
-            :key="l.container"
-          >
+          <div class="p-4 bg-gray-50 dark:bg-gray-800" :id="l.container" role="tabpanel" :class="{ hidden: i != 0 }" :aria-labelledby="`${l.container}-tab`" v-for="(l, i) in logs" :key="l.container">
             <p class="text-xs font-mono text-gray-500 dark:text-gray-400 whitespace-pre-wrap">
               {{ l.text }}
             </p>

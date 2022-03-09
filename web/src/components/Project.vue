@@ -1,4 +1,6 @@
 <script setup>
+import LogsVue from "./Logs.vue";
+
 defineProps({
   project: Object,
 });
@@ -24,7 +26,8 @@ defineProps({
       <span class="material-icons w-full h-full">restart_alt</span>
     </button>
 
-    <p class="mb-2 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+    <p v-if="project.description" class="mb-2 font-normal text-gray-700 dark:text-gray-400">{{ project.description }}</p>
+    <p v-if="project.url" class="mb-2 font-normal text-gray-700 dark:text-gray-400">URL: {{ project.url }}</p>
 
     <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
       <li class="py-3 sm:py-4" v-for="container in project.containers" :key="container.name">
@@ -40,11 +43,6 @@ defineProps({
       </li>
     </ul>
 
-    <button
-      class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-    >
-      Logs
-      <span class="material-icons scale-75">content_paste_go</span>
-    </button>
+    <LogsVue :projectName="project.name"></LogsVue>
   </div>
 </template>

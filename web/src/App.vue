@@ -27,6 +27,8 @@ projects.value = [
       { name: "redis", status: "up", uptime: "2h" },
       { name: "nginx", status: "down", uptime: null },
     ],
+    description: "simple test app",
+    url: "https://3000-lukasbm-chiefplat-f9kv2wthrpn.ws-eu34.gitpod.io/",
   },
   {
     name: "Test-app2",
@@ -34,6 +36,8 @@ projects.value = [
       { name: "test", status: "up", uptime: "4d 11h" },
       { name: "nginx", status: "down", uptime: null },
     ],
+    description: "simple test app",
+    url: "https://3000-lukasbm-chiefplat-f9kv2wthrpn.ws-eu34.gitpod.io/",
   },
   {
     name: "Test-app3",
@@ -41,6 +45,7 @@ projects.value = [
       { name: "test", status: "up", uptime: "4d 11h" },
       { name: "nginx", status: "down", uptime: null },
     ],
+    url: "https://3000-lukasbm-chiefplat-f9kv2wthrpn.ws-eu34.gitpod.io/",
   },
   {
     name: "Test-app4",
@@ -48,6 +53,7 @@ projects.value = [
       { name: "test", status: "up", uptime: "4d 11h" },
       { name: "nginx", status: "down", uptime: null },
     ],
+    description: "simple test app",
   },
   {
     name: "Test-app5",
