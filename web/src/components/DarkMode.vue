@@ -2,7 +2,7 @@
 import { ref } from "vue";
 
 let isDark = ref(false);
-if (localStorage.getItem("theme") === "dark") {
+if (localStorage.getItem("theme") === "dark" || document.body.classList.contains("dark")) {
   isDark.value = true;
   setDarkMode();
 } else {
