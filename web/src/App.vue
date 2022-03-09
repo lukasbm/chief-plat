@@ -2,6 +2,7 @@
 import ProjectVue from "./components/Project.vue";
 import RestartDialogVue from "./components/RestartDialog.vue";
 import LogsVue from "./components/Logs.vue";
+import AuthVue from "./components/Auth.vue";
 
 const proj = {
   name: "Test-app",
@@ -37,6 +38,7 @@ lol
 
 <template>
   <h1 class="text-3xl font-bold">Chief-Plat</h1>
+  <AuthVue></AuthVue>
 
   <main class="container">
     <ProjectVue :project="proj"></ProjectVue>
