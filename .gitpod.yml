@@ -7,8 +7,6 @@ tasks:
       python3 -m venv venv
       source venv/bin/activate
       pip install -r requirements.txt
-      source deactivate
-      cd ..
     command: cd /workspace/chief-plat/server && sh run.sh
     openMode: split-right
   
