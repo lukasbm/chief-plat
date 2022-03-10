@@ -44,7 +44,7 @@ def all_projects() -> List[Project]:
     res = []
     for file in glob.glob(f"{p}/*.yml"):
         print(file.split("/")[-1][:-4])
-        p = Project.find_project(file.split("/")[-1][:-4])
+        p = find_project(file.split("/")[-1][:-4])
         if p is not None:
             res.append(p)
     return res
@@ -67,17 +67,24 @@ def find_project(name: str) -> Optional[Project]:
 
 
     # Parse config into project
-    containers = conf["containers"]
-    start = ""
-    stop = ""
-    description = ""
-    urls = []
+    containers = None 
+    start = None
+    stop = None
+    description = None
+    urls = None
+
+    if "containers" in conf:
+        containers = conf["containers"]
+
+    if "description" in conf:
+        description = conf["description"]
+
+    if "urls" in conf:
+        urls = conf["urls"]
 
     if conf["type"] == "native":
         start = conf["start"]
         stop = conf["stop"]
-        urls = conf["urls"]
-        description = conf["description"]
     else:
         raise NotImplementedError
 
