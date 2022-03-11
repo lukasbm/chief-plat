@@ -3,7 +3,7 @@ import os
 from werkzeug.exceptions import HTTPException
 from flask import Flask, abort, jsonify
 from flask_httpauth import HTTPTokenAuth
-from project import Project
+from project import Project, find_project, all_projects
 
 app = Flask(__name__)
 auth = HTTPTokenAuth(scheme='Bearer')
@@ -34,21 +34,13 @@ def handle_exception(e):
 @app.route("/projects")
 @auth.login_required
 def projects():
-    res = []
-    for proj in Project.all_projects():
-        res.append({
-            "name": proj.name,
-            "containers": proj.get_status(),
-            "urls": proj.urls,
-            "description": proj.description
-        })
-    return jsonify(res)
+    return jsonify(all_projects())
 
 
 @app.route("/project/<string:project>/start")
 @auth.login_required
 def project_start(project: str):
-    p = Project.find_project(project)
+    p = find_project(project)
     if p is None:
         return abort(404)
 

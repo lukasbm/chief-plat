@@ -2,14 +2,11 @@ import os.path
 import os
 from dataclasses import dataclass
 import yaml
-from typing import List, Optional
+from typing import List, Optional, Callable
 import glob
 import docker
 
 cli = docker.from_env()
-
-class InvalidProjectConfigError(Exception):
-    pass
 
 
 @dataclass
@@ -18,8 +15,9 @@ class Project:
     containers: List[str]
     start: str
     stop: str
-    description: str
-    urls: List[str]
+    install: str
+    description: Optional[str]
+    urls: Optional[List[str]]
 
     def get_logs(self):
         res = {}
@@ -41,13 +39,14 @@ class Project:
 
 def all_projects() -> List[Project]:
     p = os.path.abspath(os.getenv("BASE_DIR"))
+    
     res = []
     for file in glob.glob(f"{p}/*.yml"):
-        print(file.split("/")[-1][:-4])
-        p = find_project(file.split("/")[-1][:-4])
+        p = find_project(os.path.split(p)[-1][:-4])
         if p is not None:
             res.append(p)
     return res
+
 
 def find_project(name: str) -> Optional[Project]:
     bd = os.path.abspath(os.getenv("BASE_DIR"))
@@ -65,16 +64,13 @@ def find_project(name: str) -> Optional[Project]:
     except:
         return None
 
-
     # Parse config into project
-    containers = None 
+    containers = None
     start = None
     stop = None
     description = None
     urls = None
 
-    if "containers" in conf:
-        containers = conf["containers"]
 
     if "description" in conf:
         description = conf["description"]
@@ -82,10 +78,11 @@ def find_project(name: str) -> Optional[Project]:
     if "urls" in conf:
         urls = conf["urls"]
 
-    if conf["type"] == "native":
+    try:
+        containers = conf["containers"]
         start = conf["start"]
         stop = conf["stop"]
-    else:
-        raise NotImplementedError
+    except KeyError:
+        return None
 
     return Project(name=name, containers=containers, start=start, stop=stop, description=description, urls=urls)
