@@ -4,9 +4,11 @@ import pytest
 
 @pytest.fixture
 def container():
+    p = find_project("test-app")
     try:
-        c = cli.containers.create("redis")
+        c = cli.containers.run("redis", detach=True, name=p.containers[0])
         yield c
+        c.stop()
         c.remove()
     except:
         pytest.fail()
@@ -20,9 +22,8 @@ def test_get_logs(container):
     assert "redis" in l[p.containers[0]]
 
 
-def test_get_status():
+def test_get_status(container):
     p = find_project("test-app")
-    os.system(p._start)
     s = p.get_status()
 
     assert len(s) == 1
