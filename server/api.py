@@ -37,6 +37,12 @@ def projects():
     return jsonify(all_projects())
 
 
+@app.route("/project/<string:project>")
+@auth.login_required
+def project(project: str):
+    return jsonify(find_project(project))
+
+
 @app.route("/project/<string:project>/start")
 @auth.login_required
 def project_start(project: str):
@@ -44,7 +50,7 @@ def project_start(project: str):
     if p is None:
         return abort(404)
 
-    os.system(p.start)
+    os.system(p._start)
 
 
 @app.route("/project/<string:project>/stop")
@@ -54,7 +60,7 @@ def project_stop(project: str):
     if p is None:
         return abort(404)
 
-    os.system(p.stop)
+    os.system(p._stop)
 
 
 @app.route("/project/<string:project>/logs")

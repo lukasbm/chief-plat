@@ -13,9 +13,8 @@ cli = docker.from_env()
 class Project:
     name: str
     containers: List[str]
-    start: str
-    stop: str
-    install: str
+    _start: str
+    _stop: str
     description: Optional[str]
     urls: Optional[List[str]]
 
@@ -39,10 +38,9 @@ class Project:
 
 def all_projects() -> List[Project]:
     p = os.path.abspath(os.getenv("BASE_DIR"))
-    
     res = []
     for file in glob.glob(f"{p}/*.yml"):
-        p = find_project(os.path.split(p)[-1][:-4])
+        p = find_project(os.path.split(file)[-1][:-4])
         if p is not None:
             res.append(p)
     return res
@@ -85,4 +83,4 @@ def find_project(name: str) -> Optional[Project]:
     except KeyError:
         return None
 
-    return Project(name=name, containers=containers, start=start, stop=stop, description=description, urls=urls)
+    return Project(name=name, containers=containers, _start=start, _stop=stop, description=description, urls=urls)
