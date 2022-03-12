@@ -34,13 +34,33 @@ def handle_exception(e):
 @app.route("/projects")
 @auth.login_required
 def projects():
-    return jsonify(all_projects())
+    ps = all_projects()
+    print(ps)
+    if ps is None:
+        abort(500)
+    res = []
+    for p in ps:
+        res.append({
+            "name": p.name,
+            "containers": p.containers,
+            "description": p.description,
+            "urls": p.urls,
+            "status": p.get_status()
+        })
+    return jsonify(res)
 
 
 @app.route("/project/<string:project>")
 @auth.login_required
 def project(project: str):
-    return jsonify(find_project(project))
+    p = find_project(project)
+    return jsonify({
+        "name": p.name,
+        "containers": p.containers,
+        "description": p.description,
+        "urls": p.urls,
+        "status": p.get_status()
+    })
 
 
 @app.route("/project/<string:project>/start")
@@ -70,4 +90,7 @@ def project_logs(project: str):
     if not p:
         return abort(404)
 
-    return jsonify(get_logs(p))
+    l = p.get_logs()
+    if l is None:
+        abort(500)
+    return jsonify(l)

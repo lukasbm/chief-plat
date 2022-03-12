@@ -21,18 +21,28 @@ class Project:
     def get_logs(self):
         res = {}
         for c in self.containers:
-            container = cli.containers.get(c)
-            res[c] = str(container.logs())
+            try:
+                container = cli.containers.get(c)
+                res[c] = str(container.logs())
+            except docker.errors.APIError:
+                return None
+            except docker.errors.NotFound:
+                continue
         return res
 
     def get_status(self):
         res = []
         for c in self.containers:
-            container = cli.containers.get(c)
-            res.append({
-                "name": c,
-                "status": container.status
-            })
+            try:
+                container = cli.containers.get(c)
+                res.append({
+                    "name": c,
+                    "status": container.status
+                })
+            except docker.errors.APIError:
+                return None
+            except docker.errors.NotFound:
+                continue
         return res
 
 
@@ -68,7 +78,6 @@ def find_project(name: str) -> Optional[Project]:
     stop = None
     description = None
     urls = None
-
 
     if "description" in conf:
         description = conf["description"]
