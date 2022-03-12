@@ -2,14 +2,10 @@ import pytest
 from api import app
 from werkzeug.wrappers import Response
 
-@pytest.fixture()
+@pytest.fixture
 def client():
     return app.test_client()
 
-
-@pytest.fixture()
-def runner():
-    return app.test_cli_runner()
 
 def test_unauthorized(client):
     resp: Response = client.get("/projects")

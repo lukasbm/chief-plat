@@ -1,9 +1,18 @@
-from project import Project, all_projects, find_project
+from project import Project, all_projects, find_project, cli
+import os
+import pytest
+
+@pytest.fixture
+def container():
+    try:
+        c = cli.containers.create("redis")
+        yield c
+        c.remove()
+    except:
+        pytest.fail()
 
 
-def test_get_logs():
-    # TODO start docker containers
-
+def test_get_logs(container):
     p = find_project("test-app")
     l = p.get_logs()
     assert len(l) == len(p.containers)
@@ -12,10 +21,10 @@ def test_get_logs():
 
 
 def test_get_status():
-    # TODO start docker containers
-
     p = find_project("test-app")
+    os.system(p._start)
     s = p.get_status()
+
     assert len(s) == 1
     assert s[0]["name"] == p.containers[0]
     assert s[0]["status"] is not None
