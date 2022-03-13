@@ -35,9 +35,6 @@ def handle_exception(e):
 @auth.login_required
 def projects():
     ps = all_projects()
-    print(ps)
-    if ps is None:
-        abort(500)
     res = []
     for p in ps:
         res.append({
@@ -54,6 +51,9 @@ def projects():
 @auth.login_required
 def project(project: str):
     p = find_project(project)
+    if p is None:
+        abort(404)
+
     return jsonify({
         "name": p.name,
         "containers": p.containers,

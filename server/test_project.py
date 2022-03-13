@@ -2,16 +2,14 @@ from project import Project, all_projects, find_project, cli
 import os
 import pytest
 
+
 @pytest.fixture
 def container():
     p = find_project("test-app")
-    try:
-        c = cli.containers.run("redis", detach=True, name=p.containers[0])
-        yield c
-        c.stop()
-        c.remove()
-    except:
-        pytest.fail()
+    c = cli.containers.run("redis", detach=True, name=p.containers[0])
+    yield c
+    c.stop()
+    c.remove()
 
 
 def test_get_logs(container):
@@ -29,6 +27,7 @@ def test_get_status(container):
     assert len(s) == 1
     assert s[0]["name"] == p.containers[0]
     assert s[0]["status"] is not None
+
 
 def test_all_projects():
     ps = all_projects()

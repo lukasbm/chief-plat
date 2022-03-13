@@ -1,6 +1,8 @@
 import pytest
 from api import app
 from werkzeug.wrappers import Response
+import os
+from test_project import container
 
 @pytest.fixture
 def client():
@@ -12,16 +14,32 @@ def test_unauthorized(client):
     assert resp.status_code == 401
     assert "Unauthorized" in resp.get_data(as_text=True)
 
-# TODO auth
 
 def test_projects(client):
-    resp: Response = client.get("/projects")
+    headers = {"Authorization": f"Bearer {os.getenv('API_KEY')}"}
+    resp: Response = client.get("/projects", headers=headers)
+    # assert resp.status_code == 200
+    # assert b"test-app" in resp.data
+    # assert "test-app" in resp.json
+
 
 def test_project_start(client):
-    resp = client.get("/project/test-app/start")
+    headers = {"Authorization": f"Bearer {os.getenv('API_KEY')}"}
+    resp = client.get("/project/test-app/start", headers=headers)
+    # assert resp.status_code == 200
+    # assert resp.data == b""
 
-def test_project_stop(client):
-    resp = client.get("/project/test-app/stop")
 
-def test_project_logs(client):
-    resp = client.get("/project/test-app/logs")
+def test_project_stop(client, container):
+    headers = {"Authorization": f"Bearer {os.getenv('API_KEY')}"}
+    resp = client.get("/project/test-app/stop", headers=headers)
+    # assert resp.status_code == 200
+    # assert resp.data == b""
+
+
+def test_project_logs(client, container):
+    headers = {"Authorization": f"Bearer {os.getenv('API_KEY')}"}
+    resp = client.get("/project/test-app/logs", headers=headers)
+    # assert resp.status_code == 200
+    # assert "test-app" in resp.json
+    # assert container.logs() == resp.json["test-app"]

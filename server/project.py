@@ -37,7 +37,8 @@ class Project:
                 container = cli.containers.get(c)
                 res.append({
                     "name": c,
-                    "status": container.status
+                    "status": container.status,
+                    "stats": container.stats
                 })
             except docker.errors.APIError:
                 return None
