@@ -5,10 +5,10 @@ urls:
 containers:
   - test-app-redis
 start: |-
-  #!/bin/bash#!/bin/bash
+  #!/bin/bash
   docker stop test-app-redis
   docker pull redis:latest
-  docker run -d --rm --name test-app-redis redis
+  docker run -d --name test-app-redis redis
 stop: |-
   #!/bin/bash
   docker stop test-app-redis
