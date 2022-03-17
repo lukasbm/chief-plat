@@ -2,7 +2,7 @@
 import Project from "./components/ProjectCard.vue";
 import Header from "./components/Header.vue";
 import { ref } from "vue";
-import { getProjects, restartProject, stopProject } from "./api";
+import { getProjects } from "./api";
 
 let projects = ref(null);
 let error = ref(null);
@@ -14,35 +14,29 @@ getProjects()
     console.error(err);
     error.value = err;
   });
-
-function restart(projectName) {
-  restartProject(projectName).catch((err) => {
-    console.error(err);
-    error.value = err;
-  });
-}
-
-function stop(projectName) {
-  stopProject(projectName).catch((err) => {
-    console.error(err);
-    error.value = err;
-  });
-}
 </script>
 
 <template>
   <div class="bg-gray-100 dark:bg-gray-700 min-h-screen">
     <Header></Header>
 
-    <main class="container flex flex-wrap justify-between items-center mx-auto">
-      <div v-if="error" class="text-center">Error: {{ error }}</div>
+    <main class="container mx-auto">
+      <div v-if="error" class="text-center">
+        <div class="flex p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
+          <span class="material-icons inline flex-shrink-0 mr-3 w-5 h-5">error</span>
+          <div>
+            <span class="font-medium">Error:</span>
+            {{ error }}
+          </div>
+        </div>
+      </div>
       <div v-else-if="projects">
         <div class="grid gap-4 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
           <Project v-for="proj in projects" :key="proj.name" :project="proj"></Project>
         </div>
       </div>
       <div v-else class="text-center">
-        <svg role="status" class="inline mr-2 w-32 h-32 mt-10 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg role="status" class="inline mr-2 w-20 h-20 mt-10 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
             fill="currentColor"

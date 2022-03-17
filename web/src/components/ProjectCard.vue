@@ -3,7 +3,7 @@ import Logs from "./Logs.vue";
 import StopButton from "./StopButton.vue";
 import RestartButton from "./RestartButton.vue";
 
-const props = defineProps({
+defineProps({
   project: Object,
 });
 </script>

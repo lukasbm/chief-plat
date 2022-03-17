@@ -11,7 +11,6 @@ const props = defineProps({
 function start() {
   startProject(props.projectName).catch((err) => {
     console.error(err);
-    error.value = err;
   });
 }
 </script>
