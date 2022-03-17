@@ -2,23 +2,17 @@
 import ProjectVue from "./components/Project.vue";
 import HeaderVue from "./components/Header.vue";
 import { ref } from "vue";
+import { getProjects } from "./api";
 
 let projects = ref(null);
 let error = ref(null);
 
-const apiKey = localStorage.getItem("apiKey");
-
-fetch(`${import.meta.env.BASE_URL}/projects`, {
-  method: "GET",
-  headers: {
-    Authorization: `Bearer ${apiKey}`,
-  },
-})
+getProjects()
   .then((resp) => {
-    console.log(resp);
     projects.value = resp.json();
   })
   .catch((err) => {
+    console.error(err);
     error.value = err;
   });
 </script>

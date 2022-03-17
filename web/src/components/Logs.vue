@@ -9,19 +9,12 @@ const props = defineProps({
 let logs = ref(null);
 let error = ref(null);
 
-const apiKey = localStorage.getItem("apiKey");
-
-fetch(`${import.meta.env.BASE_URL}/project/${props.projectName}/logs`, {
-  method: "GET",
-  headers: {
-    Authorization: `Bearer ${apiKey}`,
-  },
-})
+getLogs(props.projectName)
   .then((resp) => {
-    console.log(resp);
     logs.value = resp.json();
   })
   .catch((err) => {
+    console.error(err);
     error.value = err;
   });
 </script>
