@@ -84,6 +84,16 @@ def project_stop(project: str):
 
     os.system(p._stop)
 
+@app.route("/project/<string:project>/restart")
+@auth.login_required
+def project_restart(project: str):
+    p = find_project(project)
+    if p is None:
+        return abort(404)
+
+    os.system(p._stop)
+    os.system(p._start)
+
 
 @app.route("/project/<string:project>/logs")
 @auth.login_required
