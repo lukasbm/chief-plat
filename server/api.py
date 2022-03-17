@@ -73,6 +73,7 @@ def project_start(project: str):
         return abort(404)
 
     os.system(p._start)
+    return ""
 
 
 @app.route("/project/<string:project>/stop")
@@ -83,6 +84,7 @@ def project_stop(project: str):
         return abort(404)
 
     os.system(p._stop)
+    return ""
 
 @app.route("/project/<string:project>/restart")
 @auth.login_required
@@ -93,6 +95,7 @@ def project_restart(project: str):
 
     os.system(p._stop)
     os.system(p._start)
+    return ""
 
 
 @app.route("/project/<string:project>/logs")
