@@ -4,11 +4,14 @@ urls:
   - http://localhost:6379
 containers:
   - test-app-redis
+  - test-app-nginx
 start: |-
   #!/bin/bash
-  docker stop test-app-redis
   docker pull redis:latest
-  docker run -d --name test-app-redis redis
+  docker pull nginx:latest
+  docker run -d --name test-app-redis redis:latest
+  docker run -d --name test-app-nginx nginx:latest
 stop: |-
   #!/bin/bash
   docker stop test-app-redis
+  docker stop test-app-nginx

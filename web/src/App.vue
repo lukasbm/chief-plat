@@ -8,9 +8,8 @@ let projects = ref(null);
 let error = ref(null);
 
 getProjects()
-  .then((resp) => {
-    projects.value = resp.json();
-  })
+  .then((response) => response.json())
+  .then((data) => (projects.value = data))
   .catch((err) => {
     console.error(err);
     error.value = err;

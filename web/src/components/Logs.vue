@@ -1,4 +1,7 @@
 <script setup>
+import { ref, onMounted } from "vue";
+import { getLogs } from "../api";
+
 const props = defineProps({
   projectName: {
     type: String,
@@ -9,14 +12,15 @@ const props = defineProps({
 let logs = ref(null);
 let error = ref(null);
 
-getLogs(props.projectName)
-  .then((resp) => {
-    logs.value = resp.json();
-  })
-  .catch((err) => {
-    console.error(err);
-    error.value = err;
-  });
+onMounted(() => {
+  getLogs(props.projectName)
+    .then((response) => response.json())
+    .then((data) => (logs.value = data))
+    .catch((err) => {
+      console.error(err);
+      error.value = err;
+    });
+});
 </script>
 
 <template>
