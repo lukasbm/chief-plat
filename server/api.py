@@ -1,11 +1,13 @@
 import json
 import os
+from flask_cors import CORS
 from werkzeug.exceptions import HTTPException
 from flask import Flask, abort, jsonify
 from flask_httpauth import HTTPTokenAuth
 from project import Project, find_project, all_projects
 
 app = Flask(__name__)
+CORS(app)
 auth = HTTPTokenAuth(scheme='Bearer')
 
 
