@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { getLogs } from "../api";
+import { getProjectLogs } from "../api";
 
 const props = defineProps({
   projectName: {
@@ -13,7 +13,7 @@ let logs = ref(null);
 let error = ref(null);
 
 onMounted(() => {
-  getLogs(props.projectName)
+  getProjectLogs(props.projectName)
     .then((response) => response.json())
     .then((data) => (logs.value = data))
     .catch((err) => {

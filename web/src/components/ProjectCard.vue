@@ -1,7 +1,9 @@
 <script setup>
-import LogsVue from "./Logs.vue";
+import Logs from "./Logs.vue";
+import StopButton from "./StopButton.vue";
+import RestartButton from "./RestartButton.vue";
 
-defineProps({
+const props = defineProps({
   project: Object,
 });
 </script>
@@ -12,19 +14,8 @@ defineProps({
       {{ project.name }}
     </h5>
 
-    <button
-      type="button"
-      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-    >
-      <span class="material-icons">stop</span>
-    </button>
-
-    <button
-      type="button"
-      class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800"
-    >
-      <span class="material-icons">restart_alt</span>
-    </button>
+    <StopButton :projectName="project.name"></StopButton>
+    <RestartButton :projectName="project.name"></RestartButton>
 
     <p v-if="project.description" class="mb-2 font-normal text-gray-700 dark:text-gray-400">{{ project.description }}</p>
     <p v-if="project.url" class="mb-2 font-normal text-gray-700 dark:text-gray-400">URL: {{ project.url }}</p>
@@ -43,6 +34,6 @@ defineProps({
       </li>
     </ul>
 
-    <LogsVue :projectName="project.name"></LogsVue>
+    <Logs :projectName="project.name"></Logs>
   </div>
 </template>

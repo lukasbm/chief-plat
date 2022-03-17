@@ -1,8 +1,8 @@
 <script setup>
-import ProjectVue from "./components/Project.vue";
-import HeaderVue from "./components/Header.vue";
+import Project from "./components/ProjectCard.vue";
+import Header from "./components/Header.vue";
 import { ref } from "vue";
-import { getProjects } from "./api";
+import { getProjects, restartProject, stopProject } from "./api";
 
 let projects = ref(null);
 let error = ref(null);
@@ -14,16 +14,31 @@ getProjects()
     console.error(err);
     error.value = err;
   });
+
+function restart(projectName) {
+  restartProject(projectName).catch((err) => {
+    console.error(err);
+    error.value = err;
+  });
+}
+
+function stop(projectName) {
+  stopProject(projectName).catch((err) => {
+    console.error(err);
+    error.value = err;
+  });
+}
 </script>
 
 <template>
   <div class="bg-gray-100 dark:bg-gray-700 min-h-screen">
-    <HeaderVue></HeaderVue>
+    <Header></Header>
+
     <main class="container flex flex-wrap justify-between items-center mx-auto">
       <div v-if="error" class="text-center">Error: {{ error }}</div>
       <div v-else-if="projects">
         <div class="grid gap-4 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
-          <ProjectVue v-for="proj in projects" :key="proj.name" :project="proj"></ProjectVue>
+          <Project v-for="proj in projects" :key="proj.name" :project="proj"></Project>
         </div>
       </div>
       <div v-else class="text-center">

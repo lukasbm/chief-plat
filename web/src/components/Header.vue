@@ -1,6 +1,6 @@
 <script setup>
-import AuthVue from "./Auth.vue";
-import DarkModeVue from "./DarkMode.vue";
+import Auth from "./Auth.vue";
+import DarkMode from "./DarkMode.vue";
 </script>
 
 <template>
@@ -11,8 +11,8 @@ import DarkModeVue from "./DarkMode.vue";
         <h1 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Chief-Plat</h1>
       </div>
       <div class="flex md:order-2 space-x-2">
-        <AuthVue></AuthVue>
-        <DarkModeVue></DarkModeVue>
+        <Auth></Auth>
+        <DarkMode></DarkMode>
       </div>
     </div>
   </nav>
