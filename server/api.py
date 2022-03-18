@@ -17,6 +17,11 @@ def verify_token(token):
         return token
 
 
+@auth.error_handler
+def auth_error(status):
+    return abort(status)
+
+
 @app.errorhandler(Exception)
 def handle_exception(e):
     if isinstance(e, HTTPException):
@@ -24,7 +29,7 @@ def handle_exception(e):
             "code": e.code,
             "name": e.name,
             "description": e.description,
-        })
+        }), e.code
     else:
         return jsonify({
             "code": 500,
@@ -85,6 +90,7 @@ def project_stop(project: str):
 
     os.system(p._stop)
     return ""
+
 
 @app.route("/project/<string:project>/restart")
 @auth.login_required

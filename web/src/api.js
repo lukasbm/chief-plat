@@ -2,7 +2,6 @@ const baseUrl = import.meta.env.DEV ? "http://localhost:5000" : window.location.
 
 const getAuthHeader = () => {
   const apiKey = localStorage.getItem("apiKey") ?? "";
-  console.log(apiKey);
   return "Bearer " + apiKey;
 };
 
