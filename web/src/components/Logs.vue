@@ -14,8 +14,7 @@ let error = ref(null);
 
 onMounted(() => {
   getProjectLogs(props.projectName)
-    .then((response) => response.json())
-    .then((data) => (logs.value = data))
+    .then((res) => (logs.value = res.data))
     .catch((err) => {
       console.error(err);
       error.value = err;

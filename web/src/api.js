@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const baseUrl = import.meta.env.DEV ? "http://localhost:5000" : window.location.origin;
 
 const getAuthHeader = () => {
@@ -6,8 +8,7 @@ const getAuthHeader = () => {
 };
 
 const getProjectLogs = (projectName) => {
-  return fetch(`${baseUrl}/project/${projectName}/logs`, {
-    method: "GET",
+  return axios.get(`${baseUrl}/project/${projectName}/logs`, {
     headers: {
       Authorization: getAuthHeader(),
     },
@@ -15,8 +16,7 @@ const getProjectLogs = (projectName) => {
 };
 
 const getProjects = () => {
-  return fetch(`${baseUrl}/projects`, {
-    method: "GET",
+  return axios.get(`${baseUrl}/projects`, {
     headers: {
       Authorization: getAuthHeader(),
     },
@@ -24,8 +24,7 @@ const getProjects = () => {
 };
 
 const startProject = (projectName) => {
-  return fetch(`${baseUrl}/project/${projectName}/start`, {
-    method: "GET",
+  return axios.get(`${baseUrl}/project/${projectName}/start`, {
     headers: {
       Authorization: getAuthHeader(),
     },
@@ -33,8 +32,7 @@ const startProject = (projectName) => {
 };
 
 const stopProject = (projectName) => {
-  return fetch(`${baseUrl}/project/${projectName}/stop`, {
-    method: "GET",
+  return axios.get(`${baseUrl}/project/${projectName}/stop`, {
     headers: {
       Authorization: getAuthHeader(),
     },
@@ -42,8 +40,7 @@ const stopProject = (projectName) => {
 };
 
 const restartProject = (projectName) => {
-  return fetch(`${baseUrl}/project/${projectName}/restart`, {
-    method: "GET",
+  return axios.get(`${baseUrl}/project/${projectName}/restart`, {
     headers: {
       Authorization: getAuthHeader(),
     },
