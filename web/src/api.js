@@ -1,51 +1,52 @@
 const baseUrl = import.meta.env.DEV ? "http://localhost:5000" : window.location.origin;
 
+const getAuthHeader = () => {
+  const apiKey = localStorage.getItem("apiKey") ?? "";
+  console.log(apiKey);
+  return "Bearer " + apiKey;
+};
+
 const getProjectLogs = (projectName) => {
-  const apiKey = localStorage.getItem("apiKey");
   return fetch(`${baseUrl}/project/${projectName}/logs`, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${apiKey}`,
+      Authorization: getAuthHeader(),
     },
   });
 };
 
 const getProjects = () => {
-  const apiKey = localStorage.getItem("apiKey");
   return fetch(`${baseUrl}/projects`, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${apiKey}`,
+      Authorization: getAuthHeader(),
     },
   });
 };
 
 const startProject = (projectName) => {
-  const apiKey = localStorage.getItem("apiKey");
   return fetch(`${baseUrl}/project/${projectName}/start`, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${apiKey}`,
+      Authorization: getAuthHeader(),
     },
   });
 };
 
 const stopProject = (projectName) => {
-  const apiKey = localStorage.getItem("apiKey");
   return fetch(`${baseUrl}/project/${projectName}/stop`, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${apiKey}`,
+      Authorization: getAuthHeader(),
     },
   });
 };
 
 const restartProject = (projectName) => {
-  const apiKey = localStorage.getItem("apiKey");
   return fetch(`${baseUrl}/project/${projectName}/restart`, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${apiKey}`,
+      Authorization: getAuthHeader(),
     },
   });
 };
