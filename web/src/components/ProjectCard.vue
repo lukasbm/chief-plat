@@ -29,14 +29,16 @@ console.log(props.project);
     </ul>
 
     <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-      <li class="py-3 sm:py-4" v-for="container in project.containers" :key="container">
+      <li class="py-3 sm:py-4" v-for="container in project.status" :key="container">
         <div class="flex">
           <div class="flex-1 min-w-0">
-            <p class="font-medium text-gray-900 truncate dark:text-white">{{ container }}</p>
-            <p class="text-sm text-gray-500 truncate dark:text-gray-400">uptime: {{ container.uptime }}</p>
+            <p class="font-medium text-gray-900 truncate dark:text-white">{{ container.name }}</p>
+            <p class="text-sm text-gray-500 truncate dark:text-gray-400">status: {{ container.status }}</p>
           </div>
           <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-            <span class="rounded-full w-6 h-6 bg-green-400"></span>
+            <span v-if="container.status == 'running'" class="rounded-full w-6 h-6 bg-green-400"></span>
+            <span v-else-if="container.status == 'exited'" class="rounded-full w-6 h-6 bg-yellow-300 dark:bg-yellow-200"></span>
+            <span v-else class="rounded-full w-6 h-6 bg-red-500"></span>
           </div>
         </div>
       </li>

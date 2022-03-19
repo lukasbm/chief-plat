@@ -38,10 +38,9 @@ class Project:
                 res.append({
                     "name": c,
                     "status": container.status,
-                    "stats": container.stats
                 })
             except docker.errors.APIError:
-                return None
+                continue
             except docker.errors.NotFound:
                 continue
         return res
