@@ -14,5 +14,12 @@ flask run
 ## Run with docker
 
 ```shell
-# TODO
+docker build -t chief-plat:latest .
+
+docker run --rm --name chief-plat \
+ -v /var/run/docker.sock:/var/run/docker.sock \
+ -v ../examples:/projects \
+ -e "BASE_DIR=/projects" \
+ -e "API_KEY=123qwe" \
+ chief-plat:latest
 ```

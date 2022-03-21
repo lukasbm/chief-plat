@@ -7,8 +7,6 @@ import StartButton from "./StartButton.vue";
 const props = defineProps({
   project: Object,
 });
-
-console.log(props.project);
 </script>
 
 <template>
